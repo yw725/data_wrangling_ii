@@ -171,9 +171,53 @@ weather_df =
   select(name, id, everything())
 ```
 
+relevel to 每个图像都按照想要的顺序排列
+
+```{r}
+weather_df %>%
+  mutate(name = forcats::fct_relevel(name, c("Waikiki_HA", "CentralPark_NY", "Waterhole_WA"))) %>% 
+  ggplot(aes(x = name, y = tmax)) + 
+  geom_violin(aes(fill = name), color = "blue", alpha = .5) + 
+  theme(legend.position = "bottom")
+# relevel is an effective way to let the plots in ordered as you want
+```
+
+use reorder to achieve the same goal
+
+```{r}
+weather_df %>%
+  mutate(name = forcats::fct_reorder(name, tmax)) %>% 
+  ggplot(aes(x = name, y = tmax)) + 
+  geom_violin(aes(fill = name), color = "blue", alpha = .5) + 
+  theme(legend.position = "bottom")
+
+# look at the factors we have, order them according to the tmax value
+```
 
 
+```{r}
+data("nyc_airbnb")
 
+nyc_airbnb %>%
+  filter(neighbourhood_group == "Manhattan") %>% 
+  mutate(
+    neighbourhood = fct_reorder(neighbourhood, price, na.rm = TRUE)) %>% 
+  ggplot(aes(x = neighbourhood, y = price)) +
+  geom_boxplot() +
+  coord_flip() + 
+  ylim(0, 1000)
+```
+
+factors and linear models
+
+```{r}
+weather_df %>% 
+  lm(tmax ~ name, data = .)
+
+weather_df %>% 
+  mutate(name = forcats::fct_relevel(name, c("Waikiki_HA", "CentralPark_NY", "Waterhole_WA"))) %>%  
+  lm(tmax ~ name, data = .)
+```
 
 
 
