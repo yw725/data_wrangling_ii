@@ -220,6 +220,14 @@ weather_df %>%
 ```
 
 
+```{r}
+data("rest_inspec")
+
+rest_inspec %>% 
+  group_by(boro, grade) %>% 
+  summarize(n = n()) %>% 
+  spread(key = grade, value = n)
+```
 
 
 

@@ -582,6 +582,22 @@ nyc_airbnb %&gt;%
 ## Coefficients:
 ##        (Intercept)  nameCentralPark_NY    nameWaterhole_WA  
 ##              29.66              -12.29              -22.18</code></pre>
+<pre class="r"><code>data(&quot;rest_inspec&quot;)
+
+rest_inspec %&gt;% 
+  group_by(boro, grade) %&gt;% 
+  summarize(n = n()) %&gt;% 
+  spread(key = grade, value = n)</code></pre>
+<pre><code>## # A tibble: 6 x 8
+## # Groups:   boro [6]
+##   boro              A     B     C `Not Yet Graded`     P     Z `&lt;NA&gt;`
+##   &lt;chr&gt;         &lt;int&gt; &lt;int&gt; &lt;int&gt;            &lt;int&gt; &lt;int&gt; &lt;int&gt;  &lt;int&gt;
+## 1 BRONX         13688  2801   701              200   163   351  16833
+## 2 BROOKLYN      37449  6651  1684              702   416   977  51930
+## 3 MANHATTAN     61608 10532  2689              765   508  1237  80615
+## 4 Missing           4    NA    NA               NA    NA    NA     13
+## 5 QUEENS        35952  6492  1593              604   331   913  45816
+## 6 STATEN ISLAND  5215   933   207               85    47   149   6730</code></pre>
 </div>
 
 
